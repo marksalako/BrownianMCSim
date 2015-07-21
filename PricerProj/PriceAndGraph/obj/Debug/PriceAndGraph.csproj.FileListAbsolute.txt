@@ -1,0 +1,11 @@
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\bin\Debug\PriceAndGraph.exe.config
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\bin\Debug\PriceAndGraph.exe
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\bin\Debug\PriceAndGraph.pdb
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.csprojResolveAssemblyReference.cache
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.Form1.resources
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.Properties.Resources.resources
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.csproj.GenerateResource.Cache
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.exe
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\obj\Debug\PriceAndGraph.pdb
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\bin\Debug\PricerProj.exe
+E:\Gits\MCPricer\PricerProj\PriceAndGraph\bin\Debug\PricerProj.pdb

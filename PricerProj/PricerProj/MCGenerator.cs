@@ -9,7 +9,7 @@ namespace PricerProj
 {
     public class MCGenerator
     {
-        private BrownianMotion bm;
+        private IDescretized bm;
 
         public MCGenerator(double inMean, double inSigma, double inDeltaT = 1.0)
         {
@@ -20,16 +20,30 @@ namespace PricerProj
         {
             Random r = new Random();
             double result = initialPrice;
+            RandomGen randomNorm = new RandomGen(seed);
+            
             for (int i = 0; i < steps; ++i )
             {
-                //Normal normal = Normal.WithMeanStdDev(0, 1);
-                RandomGen randomNorm = new RandomGen(seed);
-
-                result = bm.NextPrice(result, randomNorm.NextDouble(bm.mean, bm.sigma) );
+                result = bm.NextPrice(result, randomNorm.NextDouble( bm.mean, bm.sigma ) );
             }
 
             return result;
         }
+
+        public double[] simulateHist(int steps, double initialPrice, int seed)
+        {
+            Random r             = new Random();
+            double[] result      = new double[steps];
+            RandomGen randomNorm = new RandomGen(seed);
+
+            result[0] = initialPrice;
+            for (int i = 1; i < steps; ++i)
+            {
+                result[i] = bm.NextPrice(result[i-1], randomNorm.NextDouble(bm.mean, bm.sigma));
+            }
+            return result;
+        }
+
 
         public double[] generatePaths(double initialPrice, int numberOfPaths, double timeToExpiry)
         {
@@ -42,6 +56,24 @@ namespace PricerProj
                                               initialPrice,
                                               ind);
                 }
+            );
+
+            return toReturn;
+        }
+
+        public double[][] generatePathsHist(double initialPrice, int numberOfPaths, double timeToExpiry)
+        {
+            int timeSteps = Convert.ToInt32(Math.Floor(timeToExpiry / bm.deltaT));
+
+            double[][] toReturn = new double[numberOfPaths][];
+            var indices = Enumerable.Range(0, numberOfPaths);
+
+            Parallel.ForEach(indices, ind =>
+            {
+                toReturn[ind] = simulateHist(timeSteps,
+                                             initialPrice,
+                                             ind);
+            }
             );
 
             return toReturn;

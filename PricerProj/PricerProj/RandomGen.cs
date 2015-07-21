@@ -8,12 +8,12 @@ namespace PricerProj
 {
     public class RandomGen
     {
-        Random _rng         = new Random(); //Fixed seed for reproducibility
+        Random _rng         = new Random();
         double? _spareValue = null;
 
         public RandomGen(int seed)
         {
-            Random _rng = new Random(seed);
+            Random _rng = new Random(seed * 42);
         }
 
         /// <summary>
@@ -21,39 +21,39 @@ namespace PricerProj
         /// </summary>
         public double NextDouble()
         {
-            if(null != _spareValue)
+            if (null != _spareValue)
             {
                 double tmp = _spareValue.Value;
                 _spareValue = null;
                 return tmp;
             }
 
-            // Generate two new gaussian values.
-            double x, y, sqr;
+            double v1, v2, sqr;
 
-            // We need a non-zero random point inside the unit circle.
             do
             {
-                x = 2.0 * _rng.NextDouble() - 1.0;
-                y = 2.0 * _rng.NextDouble() - 1.0;
-                sqr = x * x + y * y;
+                v1 = 2.0 * _rng.NextDouble() - 1.0;
+                v2 = 2.0 * _rng.NextDouble() - 1.0;
+                sqr = v1 * v1 + v2 * v2;
             }
-            while(sqr > 1.0 || sqr == 0);
+            while (sqr > 1.0 || sqr == 0);
 
-            // Make the Box-Muller transformation.
             double fac = Math.Sqrt(-2.0 * Math.Log(sqr) / sqr);
 
-            _spareValue = x * fac;
-            return y * fac;
+            _spareValue = v1 * fac;
+            return v2 * fac;
         }
 
-        /// <summary>
-        /// Get the next sample point from the gaussian distribution.
-        /// </summary>
+        ///// <summary>
+        ///// Get the next sample point from the gaussian distribution.
+        ///// </summary>
         public double NextDouble(double mu, double sigma)
         {
-            return mu + (NextDouble() * sigma);
+            var t = mu + (NextDouble() * sigma);
+            //Console.WriteLine(t);
+            return t;
         }
+
     }
 
     

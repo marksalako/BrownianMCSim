@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace PricerProj
 {
-    public class BrownianMotion
+    public class BrownianMotion : IDescretized
     {
-        public  double mean   { get; private set; }
-        public  double sigma  { get; private set; }
-        public  double deltaT { get; private set; }
+        public  double mean   { get; set; }
+        public  double sigma  { get; set; }
+        public  double deltaT { get; set; }
 
         public BrownianMotion(double inMean, double inSigma, double inDeltaT )
         {
@@ -23,7 +23,7 @@ namespace PricerProj
                                    double randomMove)
         {
             return currentPrice * mean * deltaT +
-                   sigma * currentPrice * randomMove;
+                   sigma * Math.Sqrt(deltaT) *currentPrice * randomMove;
         }
 
         public double NextPrice(double currentPrice, double randomMove)

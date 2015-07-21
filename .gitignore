@@ -52,3 +52,5 @@ PricerProj/PricerProj/bin/Debug/PricerProj.pdb
 *.exe
 PricerProj/PricerProj/obj/Debug/PricerProj.pdb
 PricerProj/PricerProj/bin/Debug/PricerProj.pdb
+*.exe
+PricerProj/PricerProj/bin/Debug/PricerProj.exe

@@ -19,46 +19,59 @@ namespace PriceAndGraph
 
         private void button1_Click(object sender, EventArgs e)
         {
-            int numOfPaths = 100000;
+            try
+            {
+                int numOfPaths = 100000;
 
-            double spot     = Double.Parse(textBox1.Text);
-            double Strike   = Double.Parse(textBox2.Text);
-            double expiry   = Double.Parse(textBox3.Text);
-            double interest = Double.Parse(textBox4.Text);
-            double vol      = Double.Parse(textBox5.Text);
+                double spot = Double.Parse(textBox1.Text);
+                double Strike = Double.Parse(textBox2.Text);
+                double expiry = Double.Parse(textBox3.Text);
+                double interest = Double.Parse(textBox4.Text);
+                double vol = Double.Parse(textBox5.Text);
 
-            double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
-            double stdDev = vol / Math.Sqrt(252);
+                double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
+                double stdDev = vol / Math.Sqrt(252);
 
-            PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
+                PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
-            double[] results = monty.generatePaths(spot, numOfPaths, expiry);
+                double[] results = monty.generatePaths(spot, numOfPaths, expiry);
 
-            double average = results.Average();
+                double average = results.Average();
 
-            textBox7.Text = Math.Max(average - Strike, 0.0).ToString();
+                textBox7.Text = Math.Max(average - Strike, 0.0).ToString();
+            }
+            catch
+            {
+                MessageBox.Show("Please check all inputs are entered");
+            }
 
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            int numOfPaths = Convert.ToInt32(textBox6.Text);
+            try
+            {
+                int numOfPaths = Convert.ToInt32(textBox6.Text);
 
-            double spot     = Double.Parse(textBox1.Text);
-            double Strike   = Double.Parse(textBox2.Text);
-            double expiry   = Double.Parse(textBox3.Text);
-            double interest = Double.Parse(textBox4.Text);
-            double vol      = Double.Parse(textBox5.Text);
+                double spot = Double.Parse(textBox1.Text);
+                double Strike = Double.Parse(textBox2.Text);
+                double expiry = Double.Parse(textBox3.Text);
+                double interest = Double.Parse(textBox4.Text);
+                double vol = Double.Parse(textBox5.Text);
 
-            double mean     = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
-            double stdDev   = vol / Math.Sqrt(252);
+                double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
+                double stdDev = vol / Math.Sqrt(252);
 
-            PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
+                PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
-            double[][] results = monty.generatePathsHist(spot, numOfPaths, expiry);
+                double[][] results = monty.generatePathsHist(spot, numOfPaths, expiry);
 
-            plotData(results);
-
+                plotData(results);
+            }
+            catch
+            {
+                MessageBox.Show("Please check all inputs are entered");
+            }
         }
 
         private void plotData(double[][] results)

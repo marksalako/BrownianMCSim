@@ -8,8 +8,13 @@ namespace PricerProj
 {
     public class RandomGen
     {
-        Random _rng = new Random();
+        Random _rng         = new Random(); //Fixed seed for reproducibility
         double? _spareValue = null;
+
+        public RandomGen(int seed)
+        {
+            Random _rng = new Random(seed);
+        }
 
         /// <summary>
         /// Get the next sample point from the gaussian distribution.

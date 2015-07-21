@@ -46,9 +46,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BrownianMotion.cs" />
-    <Compile Include="differentialEquation.cs" />
-    <Compile Include="Discretisation.cs" />
-    <Compile Include="EulerDiscretisation.cs" />
     <Compile Include="MCGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

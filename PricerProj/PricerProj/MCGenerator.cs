@@ -16,14 +16,14 @@ namespace PricerProj
             bm = new BrownianMotion(inMean, inSigma, inDeltaT);
         }
 
-        public double simulate(int steps, double initialPrice)
+        public double simulate(int steps, double initialPrice, int seed)
         {
             Random r = new Random();
             double result = initialPrice;
             for (int i = 0; i < steps; ++i )
             {
                 //Normal normal = Normal.WithMeanStdDev(0, 1);
-                RandomGen randomNorm = new RandomGen();
+                RandomGen randomNorm = new RandomGen(seed);
 
                 result = bm.NextPrice(result, randomNorm.NextDouble(bm.mean, bm.sigma) );
             }
@@ -39,7 +39,8 @@ namespace PricerProj
             Parallel.ForEach(indices, ind =>
                 {
                     toReturn[ind] = simulate( Convert.ToInt32 (Math.Floor(timeToExpiry / bm.deltaT)),
-                                              initialPrice );
+                                              initialPrice,
+                                              ind);
                 }
             );
 

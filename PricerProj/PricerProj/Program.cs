@@ -10,26 +10,44 @@ namespace PricerProj
     {
         static void Main(string[] args)
         {
-            int numOfPaths = 100000;
+            Console.WriteLine("-----Call Option Pricer-----");
+            Console.WriteLine("Please enter the following values...");
+            
+            Console.Write("Spot: ");
+            double spot = Convert.ToDouble(Console.ReadLine());
 
-            int timeToExpiry = 90;
+            Console.Write("Strike: ");
+            double strike = Convert.ToDouble(Console.ReadLine());
 
-            double spot = 1.5;
+            Console.Write("Time to Expiry(in days): ");
+            int timeToExpiry = Convert.ToInt32(Console.ReadLine());
 
-            double mean = Math.Pow(1.05, (1.0 / 252.0)) - 1.0;
+            Console.Write("Interest rate (eg 0.03): ");
+            double interest = Convert.ToDouble(Console.ReadLine());
 
-            //double stdDev = 0.1 / Math.Sqrt(252.0);
+            Console.Write("Volatility (eg 0.25): ");
+            double vol = Convert.ToDouble(Console.ReadLine());
 
-            double stdDev = 0.25;
 
-            MCGenerator monty = new MCGenerator(0.0, 1.0, 1.0/10 );
+            int numOfPaths = 50000;
+
+
+
+            double mean   = Math.Pow((1.0 + interest), (1.0 / timeToExpiry)) - 1.0;
+
+            double stdDev = vol / Math.Sqrt(timeToExpiry);
+
+            MCGenerator monty = new MCGenerator(mean, stdDev, 1.0);
 
             double[] results = monty.generatePaths(spot, numOfPaths, timeToExpiry);
 
             double average = results.Average();
 
+            //Console.Write(average);
+            Console.Write("Call price: ");
+            Console.Write( Math.Max(average -strike, 0.0 ) );
 
-            Console.Write(average);
+
             Console.Read();
         }
     }

@@ -34,7 +34,7 @@ namespace PriceAndGraph
 
                 PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
-                double[] results = monty.generatePaths(spot, numOfPaths, expiry);
+                List<double> results = monty.generatePaths(spot, numOfPaths, expiry);
 
                 double average = results.Average();
 

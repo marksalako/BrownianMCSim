@@ -3,6 +3,6 @@ E:\Gits\MCPricer\PricerProj\PricerProj\bin\Debug\PricerProj.exe
 E:\Gits\MCPricer\PricerProj\PricerProj\bin\Debug\PricerProj.pdb
 E:\Gits\MCPricer\PricerProj\PricerProj\bin\Debug\MathNet.Numerics.dll
 E:\Gits\MCPricer\PricerProj\PricerProj\bin\Debug\MathNet.Numerics.xml
-E:\Gits\MCPricer\PricerProj\PricerProj\obj\Debug\PricerProj.csprojResolveAssemblyReference.cache
 E:\Gits\MCPricer\PricerProj\PricerProj\obj\Debug\PricerProj.exe
 E:\Gits\MCPricer\PricerProj\PricerProj\obj\Debug\PricerProj.pdb
+E:\Gits\MCPricer\PricerProj\PricerProj\obj\Debug\PricerProj.csprojResolveAssemblyReference.cache

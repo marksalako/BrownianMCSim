@@ -164,6 +164,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(49, 26);
             this.textBox6.TabIndex = 13;
+            this.textBox6.Text = "300";
             // 
             // label6
             // 
@@ -227,6 +228,7 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

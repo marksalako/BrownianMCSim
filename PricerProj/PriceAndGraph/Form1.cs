@@ -64,7 +64,7 @@ namespace PriceAndGraph
 
                 PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
-                double[][] results = monty.generatePathsHist(spot, numOfPaths, expiry);
+                List<double[]> results = monty.generatePathsHist(spot, numOfPaths, expiry);
 
                 plotData(results);
             }
@@ -74,14 +74,16 @@ namespace PriceAndGraph
             }
         }
 
-        private void plotData(double[][] results)
+        private void plotData(List<double[]> results)
         {
             chart1.Series.Clear();
-            chart1.ChartAreas[0].AxisY.Minimum = Double.Parse(textBox1.Text) - 2;
-            chart1.ChartAreas[0].AxisY.Maximum = Double.Parse(textBox1.Text) + 2;
+
 
             var indices = Enumerable.Range(0, results[0].GetLength(0) - 1);
             int count = 0;
+            double max = double.MinValue;
+            double min = double.MaxValue;
+
             foreach (double[] line in results)
             {
                 var name = "Series" + count++;
@@ -92,8 +94,18 @@ namespace PriceAndGraph
                 foreach (int i in indices)
                 {
                     chart1.Series[name].Points.AddXY(i, line[i]);
+                    max = Math.Max(max, line[i]);
+                    min = Math.Min(min, line[i]);
                 }
             }
+
+            chart1.ChartAreas[0].AxisY.Minimum = Math.Max(min,0);
+            chart1.ChartAreas[0].AxisY.Maximum = max;
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

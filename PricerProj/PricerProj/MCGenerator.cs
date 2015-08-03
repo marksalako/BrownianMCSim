@@ -22,13 +22,14 @@ namespace PricerProj
         }
 
         private static Object _lock = new Object();
+        private static Object _lock2 = new Object();
 
         //simulate sim;
         //simulateHist simHist;
 
-        public List<double> generatePaths(double initialPrice, int numberOfPaths, double timeToExpiry)
+        public double[] generatePaths(double initialPrice, int numberOfPaths, double timeToExpiry)
         {
-            List<double> toReturn   = new List<double>(numberOfPaths);
+            double[] toReturn       = new double[numberOfPaths];
             var indices             = Enumerable.Range(0, numberOfPaths);
 
             var rnd = new Random(42);
@@ -39,20 +40,25 @@ namespace PricerProj
             int steps = Convert.ToInt32 (Math.Floor(timeToExpiry / bm.deltaT));
 
 
-            Parallel.ForEach(indices, ind =>
+            Parallel.ForEach(indices, 
+                             //new ParallelOptions { MaxDegreeOfParallelism = 2 },
+                             ind =>
                 {
-                    int seed = seeds[ind];
-
-                    //Thread.Sleep(1);
+                    int seed;
+                    lock (_lock2)
+                    {
+                        seed = seeds[ind];
+                    }
+                    Thread.Sleep(1);
 
                     simulate mySim = new simulate(simulator.simulate);
 
                     double res = mySim(steps, initialPrice, seed, bm);
                   
-                    lock (_lock)
-                    {
-                        toReturn.Add (res);
-                    }
+                    //lock (_lock)
+                    //{
+                        toReturn[ind] = (res);
+                    //}
                 }
             );
 
@@ -71,19 +77,25 @@ namespace PricerProj
             for (int i = 0; i < numberOfPaths; ++i)
                 seeds.Add(rnd.Next(1, numberOfPaths));
 
-            Parallel.ForEach(indices, ind =>
+            Parallel.ForEach(indices,
+                             new ParallelOptions { MaxDegreeOfParallelism = 1 },
+                             ind =>
             {
-                int seed = seeds[ind];
+                int seed;
+                //lock (_lock2)
+                //{
+                    seed = seeds[ind];
+                //}
 
-                Thread.Sleep(50);
+                Thread.Sleep(10);
 
                 simulateHist mySim = new simulateHist(simulator.simulateHist);
                 var res            = mySim(timeSteps, initialPrice, seeds[ind], bm);
 
-                lock (_lock)
-                {
+                //lock (_lock)
+                //{
                     toReturn.Add(res);
-                }
+                //}
             }
             );
 

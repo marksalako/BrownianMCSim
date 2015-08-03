@@ -107,7 +107,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(193, 26);
             this.textBox4.TabIndex = 7;
-            this.textBox4.Text = "0.002";
+            this.textBox4.Text = "2";
             // 
             // label4
             // 
@@ -124,7 +124,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(193, 26);
             this.textBox5.TabIndex = 9;
-            this.textBox5.Text = "0.23";
+            this.textBox5.Text = "13";
             // 
             // label5
             // 
@@ -228,7 +228,6 @@
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

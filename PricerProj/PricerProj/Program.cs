@@ -22,23 +22,23 @@ namespace PricerProj
             Console.Write("Time to Expiry(in days): ");
             int timeToExpiry = Convert.ToInt32(Console.ReadLine());
 
-            Console.Write("Interest rate (eg 0.03): ");
+            Console.Write("Interest rate (3): ");
             double interest = Convert.ToDouble(Console.ReadLine());
 
-            Console.Write("Volatility (eg 0.25): ");
+            Console.Write("Volatility (25): ");
             double vol = Convert.ToDouble(Console.ReadLine());
 
 
             int numOfPaths = 100000;
 
 
-            double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
+            double mean     = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
 
-            double stdDev = vol / Math.Sqrt(252);
+            double stdDev   = vol / (Math.Sqrt(252) * 100);
 
             MCGenerator monty = new MCGenerator(mean, stdDev, 1.0);
 
-            List<double> results = monty.generatePaths(spot, numOfPaths, timeToExpiry);
+            double[] results = monty.generatePaths(spot, numOfPaths, timeToExpiry);
 
             double average = results.Average();
 

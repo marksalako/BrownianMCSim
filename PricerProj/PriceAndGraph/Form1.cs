@@ -23,18 +23,19 @@ namespace PriceAndGraph
             {
                 int numOfPaths = 100000;
 
-                double spot = Double.Parse(textBox1.Text);
-                double Strike = Double.Parse(textBox2.Text);
-                double expiry = Double.Parse(textBox3.Text);
+                double spot     = Double.Parse(textBox1.Text);
+                double Strike   = Double.Parse(textBox2.Text);
+                double expiry   = Double.Parse(textBox3.Text);
                 double interest = Double.Parse(textBox4.Text);
-                double vol = Double.Parse(textBox5.Text);
+                double vol      = Double.Parse(textBox5.Text);
 
-                double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
-                double stdDev = vol / Math.Sqrt(252);
+                double mean = Math.Pow((1.0 + interest / 100), (1.0 / 252)) - 1.0;
+                
+                double stdDev = vol / (Math.Sqrt(252) * 100);
 
                 PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
-                List<double> results = monty.generatePaths(spot, numOfPaths, expiry);
+                double[] results = monty.generatePaths(spot, numOfPaths, expiry);
 
                 double average = results.Average();
 
@@ -59,8 +60,9 @@ namespace PriceAndGraph
                 double interest = Double.Parse(textBox4.Text);
                 double vol = Double.Parse(textBox5.Text);
 
-                double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
-                double stdDev = vol / Math.Sqrt(252);
+                double mean = Math.Pow((1.0 + interest / 100), (1.0 / 252)) - 1.0;
+                
+                double stdDev = vol / (Math.Sqrt(252) * 100);
 
                 PricerProj.MCGenerator monty = new PricerProj.MCGenerator(mean, stdDev, 1.0);
 
@@ -103,9 +105,5 @@ namespace PriceAndGraph
             chart1.ChartAreas[0].AxisY.Maximum = max;
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MathNet.Numerics.Distributions;
 using System.Threading;
+using System.Collections.Concurrent;
 
 namespace PricerProj
 {
@@ -27,49 +28,42 @@ namespace PricerProj
         //simulate sim;
         //simulateHist simHist;
 
-        public double[] generatePaths(double initialPrice, int numberOfPaths, double timeToExpiry)
+        public ConcurrentBag<double> generatePaths(double initialPrice, int numberOfPaths, double timeToExpiry)
         {
-            double[] toReturn       = new double[numberOfPaths];
-            var indices             = Enumerable.Range(0, numberOfPaths);
+            ConcurrentBag<double> toReturn = new ConcurrentBag<double>{};
+            //var indices                    = Enumerable.Range(0, numberOfPaths);
 
             var rnd = new Random(42);
-            List<int> seeds = new List<int> { numberOfPaths };
+            ConcurrentStack<int> seeds = new ConcurrentStack<int> {};
             for (int i = 0; i < numberOfPaths; ++i)
-                seeds.Add(rnd.Next(1, numberOfPaths - 1));
+                seeds.Push(rnd.Next(1, numberOfPaths - 1));
 
             int steps = Convert.ToInt32 (Math.Floor(timeToExpiry / bm.deltaT));
 
 
-            Parallel.ForEach(indices, 
+            Parallel.ForEach(seeds, 
                              //new ParallelOptions { MaxDegreeOfParallelism = 2 },
-                             ind =>
+                             seed =>
                 {
-                    int seed;
-                    lock (_lock2)
-                    {
-                        seed = seeds[ind];
-                    }
                     Thread.Sleep(1);
-
+                    
                     simulate mySim = new simulate(simulator.simulate);
 
-                    double res = mySim(steps, initialPrice, seed, bm);
-                  
-                    //lock (_lock)
-                    //{
-                        toReturn[ind] = (res);
-                    //}
+                    double res = new double();
+                    res = mySim(steps, initialPrice, seed, bm);
+
+                    toReturn.Add(res);
                 }
             );
 
             return toReturn;
         }
 
-        public List<double[]> generatePathsHist(double initialPrice, int numberOfPaths, double timeToExpiry)
+        public ConcurrentBag<double[]> generatePathsHist(double initialPrice, int numberOfPaths, double timeToExpiry)
         {
             int timeSteps = Convert.ToInt32(Math.Floor(timeToExpiry / bm.deltaT));
 
-            List<double[]> toReturn = new List<double[]>(numberOfPaths);
+            ConcurrentBag<double[]> toReturn = new ConcurrentBag<double[]> {};
             var indices             = Enumerable.Range(0, numberOfPaths);
 
             var rnd = new Random(42);
@@ -82,20 +76,16 @@ namespace PricerProj
                              ind =>
             {
                 int seed;
-                //lock (_lock2)
-                //{
-                    seed = seeds[ind];
-                //}
-
+                seed = seeds[ind];
+                
                 Thread.Sleep(10);
 
                 simulateHist mySim = new simulateHist(simulator.simulateHist);
-                var res            = mySim(timeSteps, initialPrice, seeds[ind], bm);
+                var res = new double[timeSteps];
 
-                //lock (_lock)
-                //{
-                    toReturn.Add(res);
-                //}
+                res = mySim(timeSteps, initialPrice, seeds[ind], bm);
+
+                toReturn.Add(res);
             }
             );
 

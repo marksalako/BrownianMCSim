@@ -11,9 +11,11 @@ namespace PricerProj
         Random _rng         = new Random();
         double? _spareValue = null;
 
+
+
         public RandomGen(int seed)
         {
-            Random _rng = new Random(seed * 42);
+            Random _rng = new Random(seed);
         }
 
         /// <summary>

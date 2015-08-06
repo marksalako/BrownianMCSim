@@ -5,3 +5,4 @@ E:\Gits\MCPricer\PricerProj\PricerProj\bin\Release\MathNet.Numerics.dll
 E:\Gits\MCPricer\PricerProj\PricerProj\bin\Release\MathNet.Numerics.xml
 E:\Gits\MCPricer\PricerProj\PricerProj\obj\Release\PricerProj.exe
 E:\Gits\MCPricer\PricerProj\PricerProj\obj\Release\PricerProj.pdb
+E:\Gits\MCPricer\PricerProj\PricerProj\obj\Release\PricerProj.csprojResolveAssemblyReference.cache

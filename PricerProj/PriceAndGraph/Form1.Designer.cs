@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
@@ -66,6 +65,7 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(193, 26);
             this.textBox1.TabIndex = 1;
+            this.textBox1.Text = "100";
             // 
             // textBox2
             // 
@@ -73,6 +73,7 @@
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(193, 26);
             this.textBox2.TabIndex = 3;
+            this.textBox2.Text = "100";
             // 
             // label2
             // 
@@ -89,6 +90,7 @@
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(193, 26);
             this.textBox3.TabIndex = 5;
+            this.textBox3.Text = "550";
             // 
             // label3
             // 
@@ -105,6 +107,7 @@
             this.textBox4.Name = "textBox4";
             this.textBox4.Size = new System.Drawing.Size(193, 26);
             this.textBox4.TabIndex = 7;
+            this.textBox4.Text = "2";
             // 
             // label4
             // 
@@ -121,6 +124,7 @@
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(193, 26);
             this.textBox5.TabIndex = 9;
+            this.textBox5.Text = "13";
             // 
             // label5
             // 
@@ -135,12 +139,9 @@
             // 
             chartArea1.Name = "ChartArea1";
             this.chart1.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart1.Legends.Add(legend1);
             this.chart1.Location = new System.Drawing.Point(503, 83);
             this.chart1.Name = "chart1";
             series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
             series1.Name = "Series1";
             this.chart1.Series.Add(series1);
             this.chart1.Size = new System.Drawing.Size(1042, 624);
@@ -163,6 +164,7 @@
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(49, 26);
             this.textBox6.TabIndex = 13;
+            this.textBox6.Text = "300";
             // 
             // label6
             // 

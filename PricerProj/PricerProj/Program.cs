@@ -10,56 +10,44 @@ namespace PricerProj
     {
         static void Main(string[] args)
         {
-            //int count = 0;
-            //while (count++ < 10)
-            //{
-                Console.WriteLine("-----Call Option Pricer-----");
-                Console.WriteLine("Please enter the following values...");
+            Console.WriteLine("-----Call Option Pricer-----");
+            Console.WriteLine("Please enter the following values...");
 
-                Console.Write("Spot: ");
-                double spot = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Spot: ");
+            double spot = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Strike: ");
-                double strike = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Strike: ");
+            double strike = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Time to Expiry(in days): ");
-                int timeToExpiry = Convert.ToInt32(Console.ReadLine());
+            Console.Write("Time to Expiry(in days): ");
+            int timeToExpiry = Convert.ToInt32(Console.ReadLine());
 
-                Console.Write("Interest rate (eg 0.03): ");
-                double interest = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Interest rate (3): ");
+            double interest = Convert.ToDouble(Console.ReadLine());
 
-                Console.Write("Volatility (eg 0.25): ");
-                double vol = Convert.ToDouble(Console.ReadLine());
+            Console.Write("Volatility (25): ");
+            double vol = Convert.ToDouble(Console.ReadLine());
 
 
-                int numOfPaths = 100000;
+            int numOfPaths = 100000;
 
 
-                //double dailyDrft     = interest / 252.0;
-                //double dailyVol      = vol / Math.Sqrt(252);
-                //double expDailyDrift = dailyDrft - (0.5 * Math.Pow(dailyVol, 2.0));
+            double mean     = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
 
+            double stdDev   = vol / (Math.Sqrt(252) * 100);
 
+            MCGenerator monty = new MCGenerator(mean, stdDev, 1.0);
 
-                double mean = Math.Pow((1.0 + interest), (1.0 / 252)) - 1.0;
+            double[] results = monty.generatePaths(spot, numOfPaths, timeToExpiry);
 
-                double stdDev = vol / Math.Sqrt(252);
+            double average = results.Average();
 
-                MCGenerator monty = new MCGenerator(mean, stdDev, 1.0);
-
-                double[] results = monty.generatePaths(spot, numOfPaths, timeToExpiry);
-
-                double average = results.Average();
-
-                //Console.Write(average);
-                Console.Write("Call price: ");
-                Console.WriteLine(Math.Max(average - strike, 0.0));
-                Console.WriteLine("Max path-end: {0}", results.Max().ToString());
-                Console.WriteLine("Min path-end: {0}", results.Min().ToString());
-
-            //}
-
-
+            //Console.Write(average);
+            Console.Write("Call price: ");
+            Console.WriteLine(Math.Max(average - strike, 0.0));
+            Console.WriteLine("Max path-end: {0}", results.Max().ToString());
+            Console.WriteLine("Min path-end: {0}", results.Min().ToString());
+            Console.WriteLine("Standard Error: {0}", stdDev / Math.Sqrt(numOfPaths));
 
             Console.Read();
         }
